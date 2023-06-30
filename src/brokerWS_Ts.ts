@@ -111,11 +111,11 @@ aedes.on('publish', function (packet:any, client:any) {if (client) {
       return typ.jsToJSON; 
   }*/
 
-console.log("Datos obj: " + centralizadorDato.nom +" , pasw: "+ centralizadorDato.pasC +" id: "+centralizadorDato.pMed[0].id );
+//console.log("Datos obj: " + centralizadorDato.nom +" , pasw: "+ centralizadorDato.pasC +" id: "+centralizadorDato.pMed[0].id );
 centralizadorDato.pMed.forEach(element => console.log("bat: "+element.bat +" Fecha: "+ element.f)) ;
 //centralizadorDato.pMed[0].daLo.forEach(element => console.log("Fecha: "+ element.toString())) ;
 
   }
-});1
+});
 
 
