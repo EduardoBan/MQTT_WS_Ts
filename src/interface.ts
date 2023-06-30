@@ -19,7 +19,7 @@ export interface Welcome9 {
     daLo: DaLo[];
   }
   
-  export interface DaLo {
+  export interface DaLo {  //Interface Data Logger
    // f:  number;
    
     // A1: number;
