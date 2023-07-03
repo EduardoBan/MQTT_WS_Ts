@@ -1,28 +1,4 @@
 "use strict";
-/* var mosca = require("mosca");
-var server = new mosca.Server({
-  http: {
-    port: 1884,
-    bundle: true,
-    static: './'
-  }
-});
-
-server.on('clientConnected', function(client: { id: any; }) {
-    console.log('client connected', client.id);
-});
-
-server.on('published', function(packet: { payload: { toString: () => any; }; }, client: any) {
-    console.log('Published', packet.payload.toString());
-});
-
-var authenticate = function(client:any, username:any, password:any, callback:any) {
-    var authorized = (username === 'xyz' && password.toString() === 'xyz123');
-    if (authorized) client.user = username;
-    callback("not authorized");
-}
-
-server.authenticate = authenticate; */
 Object.defineProperty(exports, "__esModule", { value: true });
 const aedes = require('aedes')();
 const server = require('net').createServer(aedes.handle);
@@ -30,9 +6,6 @@ const httpServer = require('http').createServer();
 const ws = require('websocket-stream');
 const port = 1883;
 const wsPort = 3000;
-/* server.listen(port, function () {
-  console.log('TCP server started and listening on port (mqtt://)', port)
-}) */
 ws.createServer({ server: httpServer }, aedes.handle);
 httpServer.listen(wsPort, function () {
     console.log('WebSocket server listening on port (ws://)', wsPort);
@@ -84,16 +57,6 @@ aedes.on('publish', function (packet, client) {
     if (client) {
         console.log(`Mensaje publicado por cliente:\x1b[32m  ${(client ? client.id : '\x1b[0m Broker:\x1b[32m ' + aedes.id)} \x1b[0m Mensaje: \x1b[32m "${packet.payload}"\x1b[0m en el topic:  ${packet.topic} al broker:\x1b[32m ${aedes.id}'\x1b[0m'`);
         const centralizadorDato = JSON.parse(packet.payload);
-        //const centralizadorDato = packet.payload;
-        //  console.log(" Datos Central:"+centralizadorDato )
-        /*     function jsToJSONProps(typ: any): any {
-              if (typ.jsToJSON === undefined) {
-                  const map: any = {};
-                  typ.props.forEach((p: any) => map[p.js] = { key: p.json, typ: p.typ });
-                  typ.jsToJSON = map;
-              }
-              return typ.jsToJSON;
-          }*/
         //--------- REcorro los datos del Centralizador
         console.log("Centralizador: " + centralizadorDato.nom + " , pasw: " + centralizadorDato.pasC + " ,bat:" + centralizadorDato.bat + " ,RSSI:" + centralizadorDato.rssi);
         //---------- Recorro la información de cada pto de medicion
@@ -102,10 +65,9 @@ aedes.on('publish', function (packet, client) {
         let cantidad = centralizadorDato.pMed.length;
         console.log("Cant Pto Med:" + cantidad);
         for (let i = 0; i <= (cantidad - 1); i++) { //recorro los pMed
-            console.log("Pto Med key " + i);
-            let cantdalo = centralizadorDato.pMed[i].daLo.length; //recorro los daLo
-            console.log("Dalo key " + cantdalo);
-            for (let j = 0; j <= (cantdalo - 1); j++) {
+            let cantdalo = centralizadorDato.pMed[i].daLo.length;
+            console.log("Pto Med id:" + i + " Cant.DaLo:" + cantdalo);
+            for (let j = 0; j <= (cantdalo - 1); j++) { //recorro los daLo
                 var datointer = centralizadorDato.pMed[i].daLo[j];
                 console.log(datointer);
             }
